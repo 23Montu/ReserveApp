@@ -6,7 +6,12 @@ Sistema integral para la gestión y administración de reservas hoteleras, dise�
 
 ## Descripción del Proyecto
 
-**ReserveApp** es una solución de software orientada a resolver problemas operativos comunes en la industria hotelera, tales como el *overbooking*, tiempos extendidos en el registro de huéspedes y la falta de visibilidad del estado de mantenimiento/limpieza de las habitaciones.
+**ReserveApp** Desarrollar un sistema de gestión de reservas para un hotel que permita a los clientes consultar la disponibilidad de habitaciones, realizar reservas y administrar sus solicitudes de manera rápida y organizada, igualmente, el personal del hotel podrá gestionar habitaciones, clientes, reservas, fechas de ingreso y salida y disponibilidad.
+
+En algunos hoteles, la gestión de reservas puede realizarse mediante llamadas telefónicas, mensajes, redes sociales o registros manuales, estos métodos pueden generar dificultades como reservas duplicadas, errores en las fechas de entrada y salida, pérdida de información, problemas para conocer la disponibilidad de las habitaciones y demoras en la atención al cliente.
+
+Por esta razón, se propone desarrollar ReserveApp, un sistema que centralice la información relacionada con las habitaciones y reservas. De esta manera, los clientes podrán consultar la disponibilidad y realizar sus reservas, mientras que el personal del hotel podrá administrar de forma organizada las habitaciones, clientes y reservas.
+
 
 ---
 
