@@ -1,3 +1,20 @@
+# Documento de Requisitos: Gestor de Reservas de Hotel
+
+
+
+## Actores Principales del Sistema
+
+* **Huésped / Cliente:** Usuario final que busca, reserva y gestiona sus estancias en el hotel.
+
+* **Recepcionista / Administrador:** Personal del hotel encargado de gestionar reservas, realizar check-in/check-out y administrar la disponibilidad de habitaciones.
+
+* **Personal de Limpieza / Mantenimiento:** Personal operativo que consulta y actualiza el estado de limpieza y disponibilidad física de las habitaciones.
+
+
+
+## Matriz de Problemas, Necesidades y Requisitos Funcionales
+
+
 | Problema Identificado | Necesidad de Software | Requisito Funcional |
 | :--- | :--- | :--- |
 | **Overbooking:** Doble reserva involuntaria de la misma habitación en las mismas fechas. | Control automatizado y en tiempo real de la disponibilidad por tipo de habitación. | **RF01:** El sistema debe actualizar el inventario de habitaciones en tiempo real e impedir la confirmación de reservas en fechas ocupadas. |
