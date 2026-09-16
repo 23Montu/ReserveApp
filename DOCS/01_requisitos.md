@@ -1,27 +1,16 @@
 # Documento de Requisitos: Gestor de Reservas de Hotel
 
-
-
 ## Actores Principales del Sistema
-
 * **Huésped / Cliente:** Usuario final que busca, reserva y gestiona sus estancias en el hotel.
-
 * **Recepcionista / Administrador:** Personal del hotel encargado de gestionar reservas, realizar check-in/check-out y administrar la disponibilidad de habitaciones.
-
 * **Personal de Limpieza / Mantenimiento:** Personal operativo que consulta y actualiza el estado de limpieza y disponibilidad física de las habitaciones.
-
-
 
 ## Matriz de Problemas, Necesidades y Requisitos Funcionales
 
-
 | Problema Identificado | Necesidad de Software | Requisito Funcional |
 | :--- | :--- | :--- |
-| **Overbooking:** Doble reserva involuntaria de la misma habitación en las mismas fechas. | Control automatizado y en tiempo real de la disponibilidad por tipo de habitación. | **RF01:** El sistema debe actualizar el inventario de habitaciones en tiempo real e impedir la confirmación de reservas en fechas ocupadas. |
-| **Largas esperas en recepción:** Demoras en el registro manual de entrada y salida de clientes. | Flujo ágil para verificar reservas y registrar datos del huésped rápidamente. | **RF02:** El sistema debe permitir al recepcionista buscar reservas por nombre/DNI y realizar el check-in/check-out en menos de tres clics. |
-| **Falta de visibilidad operativa:** Desconocimiento de qué habitaciones están listas para ser ocupadas tras el check-out. | Módulo de seguimiento del estado de limpieza de habitaciones en tiempo real. | **RF03:** El sistema debe permitir actualizar y consultar los estados de la habitación (*Limpia*, *Sucia*, *En Mantenimiento*). |
-| **Pérdida de ingresos por cancelaciones tardías:** Clientes que no se presentan (*no-show*) sin penalización ni aviso previo. | Gestión automatizada de políticas de cancelación y cobro de depósitos o garantías. | **RF04:** El sistema debe permitir definir políticas de cancelación y procesar el cobro automático de cargos por no presentación o cancelación fuera de plazo. |
-| **Errores en la facturación y cobros:** Inconsistencias entre los consumos del huésped y el monto final cobrado. | Módulo integrado de facturación y registro de consumos adicionales. | **RF05:** El sistema debe consolidar los costos de estancia y servicios adicionales (*room service*, minibar) en una sola cuenta y generar facturas electrónicas. |
-| **Falta de historial de clientes:** Imposibilidad de identificar huéspedes frecuentes o sus preferencias particulares. | Base de datos centralizada de huéspedes con perfil e historial de estancias. | **RF06:** El sistema debe almacenar el historial de reservas y preferencias de los clientes para ofrecer una atención personalizada. |
-| **Dificultad en la asignación de tareas:** Falta de coordinación directa con el personal de mantenimiento ante averías. | Sistema de notificaciones e incidencias internas por habitación. | **RF07:** El sistema debe permitir reportar incidencias técnicas en habitaciones y notificar automáticamente al personal de mantenimiento. |
-| **Poca visibilidad del rendimiento del hotel:** Falta de métricas clave sobre ocupación e ingresos diarios y mensuales. | Generación de reportes estadísticos y analítica de ocupación. | **RF08:** El sistema debe generar reportes exportables de porcentaje de ocupación, ingresos promedio por habitación (RevPAR) y proyección de ventas. |
+| **1. Ineficiencia en la Gestión de Inventario y Overbooking:** Conflictos por reservas dobles en las mismas fechas y pérdidas de ingresos asociadas a cancelaciones no penalizadas o *no-shows*. | Control automatizado en tiempo real de la disponibilidad y aplicación sistemática de políticas de cancelación. | **RF01:** El sistema debe actualizar el inventario de habitaciones en tiempo real e impedir confirmaciones en fechas ocupadas.<br><br>**RF02:** El sistema debe gestionar políticas de cancelación y procesar cobros automáticos por *no-show* o cancelaciones tardías. |
+| **2. Cuellos de Botella y Errores en la Atención Presencial:** Demoras operativas durante el registro de entrada/salida e inconsistencias en el cobro manual de consumos adicionales. | Flujo ágil de registro de huéspedes e integración centralizada de consumos en la cuenta de la habitación. | **RF03:** El sistema debe permitir al recepcionista buscar reservas por nombre/DNI y completar el check-in/check-out en tres clics o menos.<br><br>**RF04:** El sistema debe consolidar la estancia y consumos adicionales (*room service*, minibar) en una sola cuenta y generar facturas electrónicas. |
+| **3. Desconexión Operativa y de Mantenimiento:** Desconocimiento sobre la disponibilidad física real de las habitaciones e ineficiencia en el reporte y atención de averías. | Módulo centralizado de seguimiento de estados operativos de habitaciones y gestión instantánea de incidencias. | **RF05:** El sistema debe permitir actualizar y consultar los estados de la habitación (*Limpia*, *Sucia*, *En Mantenimiento*) en tiempo real.<br><br>**RF06:** El sistema debe permitir registrar incidencias técnicas por habitación y enviar notificaciones automáticas al personal de mantenimiento. |
+| **4. Ausencia de Trazabilidad y Fidelización del Cliente:** Imposibilidad de identificar huéspedes frecuentes y desconocimiento de sus preferencias para brindar un servicio personalizado. | Registro histórico centralizado de clientes y gestión de perfiles de usuario. | **RF07:** El sistema debe almacenar el historial de estancias, consumos y preferencias de los huéspedes para personalización del servicio. |
+| **5. Opacidad en la Toma de Decisiones Estratégicas:** Inexistencia de analítica centralizada sobre el desempeño financiero y los niveles de ocupación del hotel. | Módulo de Inteligencia de Negocio y analítica avanzada con reportes consolidados. | **RF08:** El sistema debe generar reportes exportables de ocupación, ingresos promedio por habitación (RevPAR) y proyecciones de ventas. |
