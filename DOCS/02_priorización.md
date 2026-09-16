@@ -12,3 +12,10 @@
 | **#8** | **HU08 - Gestión de Incidencias y Mantenimiento** | Could Have | Impacto Operativo | Mejora la comunicación interna ante averías técnicas en habitaciones, notificando al personal antes de que afecte al cliente. | Complejidad baja-media (sistema de notificaciones internas). |
 | **#9** | **HU09 - Perfil e Historial del Huésped** | Could Have | Impacto UX y Comercial | Permite personalizar el servicio y fidelizar huéspedes recurrentes según sus estancias y preferencias anteriores. | Complejidad baja (consulta histórica de base de datos). |
 | **#10** | **HU10 - Generación de Reportes y Métricas de Ocupación** | Should Have | Impacto Estratégico | Entrega visión de negocio a la administración sobre ocupación e ingresos (RevPAR) para la toma de decisiones financieras. | Complejidad media-alta por procesamiento de datos y consultas analíticas. |
+
+### 2.2. Alcance del Producto Mínimo Viable (MVP)
+
+El Producto Mínimo Viable (MVP) para el lanzamiento de **ReserveApp** se compondrá de las cinco historias clasificadas como **Must Have** (`#1`, `#2`, `#3`, `#4` y `#5`).
+
+* **Justificación de Selección:** Juntas cubren el flujo operativo crítico de extremo a extremo del negocio: autenticación y control de acceso por rol (`#1`), descubrimiento de disponibilidad (`#2`), aseguramiento del ingreso económico mediante el pago (`#3`), la operación presencial de check-in/check-out (`#4`) y el control físico del estado de las habitaciones (`#5`). Sin estas cinco, el hotel no puede operar el ciclo básico de reserva-estancia-salida.
+* **Funcionalidades Postergadas:** Las historias `#6` a `#10` (cancelaciones, facturación de consumos, incidencias de mantenimiento, perfil/historial del huésped y reportes de ocupación) se posponen para ciclos posteriores, ya que aportan valor financiero/estratégico incremental pero no son indispensables para que el hotel comience a operar con el sistema.
