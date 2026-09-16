@@ -29,5 +29,5 @@ Por esta razón, se propone desarrollar ReserveApp, un sistema que centralice la
 ReserveApp/
 ├── DOCS/
 │   └── 01_requisitos.md    # Documento de requisitos, actores y matriz de problemas
-    └──02_Priorizaciòn.md    # Documento de priorizaciòn.
+    └── 02_Priorizaciòn.md    # Documento de priorizaciòn.
 └── README.md               # Descripción e información general del proyecto
