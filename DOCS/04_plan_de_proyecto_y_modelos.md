@@ -18,7 +18,6 @@ El enfoque iterativo e incremental de Scrum permite entregar un **Producto Míni
 * **Duración Total del MVP en Semanas:** 6 Semanas.
 * **Duración Total del Proyecto Completo en Semanas:** 10 Semanas.
 
-> **Nota:** la velocidad de 12 SP/Sprint es una estimación inicial basada en la capacidad nominal del equipo (2 desarrolladores). Debe recalibrarse con la velocidad real observada al cierre del Sprint 1.
 
 ## 3. Planificación Detallada de Sprints
 
