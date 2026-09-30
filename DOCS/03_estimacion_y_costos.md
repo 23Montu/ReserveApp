@@ -83,4 +83,3 @@ C_total = $1.800.000 + $1.080.000 + $4.680.000 + $720.000 + $720.000 + $1.800.00
 | **#10** | HU10 - Reportes y Métricas de Ocupación | Should Have | 8 SP | 8 horas/SP | 64 horas | $45.000 COP | $2.880.000 COP | Procesamiento analítico y consultas de agregación (RevPAR). |
 | **TOTAL** | Backlog Completo | -- | **48 SP** | -- | **384 horas** | -- | **$17.280.000 COP** | Proyecto Completo Estimado |
 
-> **Nota metodológica:** los puntajes de esta votación de Planning Poker fueron derivados de la complejidad cualitativa ya documentada en `02_priorización.md`, tomando **HU05 como historia pivote (2 SP)**. Se recomienda que el equipo (PO, Líder Técnico y ambos desarrolladores) valide o ajuste estos valores en una sesión real de consenso antes de tomarlos como definitivos para la planificación de sprints.
