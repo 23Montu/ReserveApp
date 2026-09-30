@@ -2,7 +2,7 @@
 
 #### 3.1. Parámetros del Proyecto
 
-* **Equipo:** 1 Product Owner, 1 Líder Técnico, 2 Desarrolladoras/es.
+* **Equipo:** 1 Product Owner (Luisa Maria Basanta Cordoba), 1 Líder Técnico (Miguel Angel Narvaez Montufar), 2 Desarrolladoras/es/ (Juan David Ordoñez Bolaños y Daniel Alejandro Benavides).
 * **Base de pivote Historia:** HU05 - Control del Estado Operativo de Habitaciones = 2 SP.
 * **Factor de Conversión (F_c):** 8 Horas / SP.
 * **Tarifa Profesional (T_h):** $45.000 COP / Hora.
