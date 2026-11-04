@@ -36,6 +36,7 @@ ReserveApp/
 │   ├── controllers/        # Fachada y reglas de negocio
 │   ├── dao/                # Acceso a datos (en memoria por ahora)
 │   ├── models/             # Entidades del dominio
+│   ├── seguridad/          # Hash de contraseñas y tokens JWT
 │   ├── views/              # Interfaz web
 │   └── server.js           # Servidor Express y rutas de la API
 ├── package.json            # Dependencias y comandos del proyecto
@@ -46,11 +47,33 @@ ReserveApp/
 
 ## Ejecución Local
 
-Requiere Node.js 18 o superior.
+Requiere Node.js 18 o superior. El servidor no inicia sin la variable de entorno `JWT_SECRET`, de al menos 32 bytes, que firma los tokens de sesión. No la guardes en Git.
+
+En PowerShell:
+
+```powershell
+npm install
+$env:JWT_SECRET = node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
+npm start
+```
+
+En Bash:
 
 ```bash
 npm install
+export JWT_SECRET="$(node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))")"
 npm start
 ```
 
 Después abre <http://localhost:3000>. Las habitaciones y reservas son datos de ejemplo en memoria: no representan tarifas reales y se reinician con cada ejecución.
+
+## Registro e Inicio de Sesión
+
+Entra a <http://localhost:3000/cuenta.html> o usa el enlace **Mi cuenta** de la página principal.
+
+* Las cuentas se guardan en memoria y se pierden al reiniciar el servidor.
+* El registro público siempre crea cuentas con rol `HUESPED`. Todavía no hay una forma de crear cuentas de personal.
+* La contraseña debe tener entre 15 y 128 caracteres, sin reglas de composición.
+* Las contraseñas se guardan como hash con Argon2id, o con scrypt si la versión de Node no incluye `crypto.argon2`.
+* La sesión es un JWT que dura 1 hora y viaja en una cookie `HttpOnly`.
+* La confirmación del registro se muestra en la interfaz; no se envían correos.

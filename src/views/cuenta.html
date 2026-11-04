@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi cuenta | ReserveApp</title>
+    <link rel="stylesheet" href="estilos.css">
+  </head>
+  <body>
+    <header class="encabezado">
+      <p class="marca">ReserveApp</p>
+      <h1>Mi cuenta</h1>
+      <nav><a class="enlace-encabezado" href="index.html">Buscar habitaciones</a></nav>
+    </header>
+
+    <main class="contenido">
+      <div id="paneles-acceso" class="paneles-cuenta">
+        <form id="formulario-registro" class="panel-cuenta">
+          <h2>Crear cuenta</h2>
+          <div class="campo">
+            <label for="registro-correo">Correo electrónico</label>
+            <input id="registro-correo" name="correo" type="email" autocomplete="email" required>
+          </div>
+          <div class="campo">
+            <label for="registro-contrasena">Contraseña</label>
+            <input
+              id="registro-contrasena"
+              name="contrasena"
+              type="password"
+              autocomplete="new-password"
+              minlength="15"
+              maxlength="128"
+              aria-describedby="pista-contrasena"
+              required
+            >
+            <p id="pista-contrasena" class="pista">
+              Mínimo 15 caracteres. Puedes usar una frase fácil de recordar; no se exigen
+              mayúsculas, números ni símbolos.
+            </p>
+          </div>
+          <button type="submit">Crear cuenta</button>
+          <p id="mensaje-registro" class="mensaje-cuenta" role="status"></p>
+        </form>
+
+        <form id="formulario-login" class="panel-cuenta">
+          <h2>Iniciar sesión</h2>
+          <div class="campo">
+            <label for="login-correo">Correo electrónico</label>
+            <input id="login-correo" name="correo" type="email" autocomplete="username" required>
+          </div>
+          <div class="campo">
+            <label for="login-contrasena">Contraseña</label>
+            <input
+              id="login-contrasena"
+              name="contrasena"
+              type="password"
+              autocomplete="current-password"
+              required
+            >
+          </div>
+          <button type="submit">Iniciar sesión</button>
+          <p id="mensaje-login" class="mensaje-cuenta" role="status"></p>
+        </form>
+      </div>
+
+      <section id="panel-sesion" class="panel-cuenta" hidden>
+        <h2>Sesión iniciada</h2>
+        <p id="datos-sesion"></p>
+        <button id="boton-salir" type="button">Cerrar sesión</button>
+        <p id="mensaje-sesion" class="mensaje-cuenta" role="status"></p>
+      </section>
+    </main>
+
+    <script src="cuenta.js"></script>
+  </body>
+</html>
