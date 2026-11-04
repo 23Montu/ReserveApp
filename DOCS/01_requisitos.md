@@ -26,3 +26,7 @@ Detalla el criterio de aceptación "contraseña segura":
 * La contraseña no se trunca.
 * Se rechaza la contraseña completa si coincide con una lista mantenible de contraseñas comunes, esperadas o comprometidas (`src/seguridad/contrasenas-comunes.txt`). La lista incluye valores previsibles muy comunes, como algunas secuencias o repeticiones; no se prohíbe de forma general cualquier secuencia o repetición.
 * Al rechazarla, el sistema muestra un mensaje claro que explica que se debe elegir una contraseña menos común.
+
+### Comportamiento implementado, pendiente de aprobación
+
+* **Comparación con la lista:** el comportamiento implementado compara sin distinguir mayúsculas y con normalización Unicode NFKC, para que variantes como `PASSWORDPASSWORD` o los mismos dígitos en ancho completo no eludan la lista. El criterio anterior no lo exige y **todavía no está aprobado**. Ignorar las mayúsculas solo afecta a esta comparación: al guardar la contraseña e iniciar sesión, las mayúsculas sí se distinguen.
