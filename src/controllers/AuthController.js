@@ -2,6 +2,7 @@ const { randomBytes, randomUUID } = require('node:crypto');
 const UsuarioDAO = require('../dao/UsuarioDAO');
 const { Usuario, ROLES } = require('../models/Usuario');
 const { hashearContrasena, verificarContrasena } = require('../seguridad/contrasenas');
+const { esContrasenaComun } = require('../seguridad/contrasenasComunes');
 const { crearToken, verificarToken } = require('../seguridad/jwt');
 
 const DURACION_SESION_SEGUNDOS = 60 * 60;
@@ -9,9 +10,9 @@ const LONGITUD_MAXIMA_CORREO = 254;
 const FORMATO_CORREO = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
 
 /**
- * Política de contraseñas: el proyecto no documenta una propia, así que se sigue a
- * OWASP para cuentas sin MFA: longitud mínima de 15 y sin reglas de composición.
- * El máximo admite frases largas y se rechaza en lugar de truncar.
+ * Política de contraseñas acordada para HU01 (ver DOCS/01_requisitos.md): entre 15 y 128
+ * puntos de código, sin reglas de composición y fuera de la lista de contraseñas comunes.
+ * Lo que excede el máximo se rechaza en lugar de truncarse.
  */
 const LONGITUD_MINIMA_CONTRASENA = 15;
 const LONGITUD_MAXIMA_CONTRASENA = 128;
@@ -95,6 +96,12 @@ class AuthController {
       return {
         estado: 400,
         error: `La contraseña no puede superar los ${LONGITUD_MAXIMA_CONTRASENA} caracteres.`,
+      };
+    }
+    if (esContrasenaComun(contrasena)) {
+      return {
+        estado: 400,
+        error: 'Esa contraseña es muy común o fácil de adivinar. Elige una contraseña menos común.',
       };
     }
 

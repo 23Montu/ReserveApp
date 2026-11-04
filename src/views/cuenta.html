@@ -23,19 +23,20 @@
           </div>
           <div class="campo">
             <label for="registro-contrasena">Contraseña</label>
+            <!-- Sin límite máximo en HTML: el navegador cuenta unidades UTF-16 y cortaría
+                 en silencio lo pegado. El servidor valida el máximo sin truncar. -->
             <input
               id="registro-contrasena"
               name="contrasena"
               type="password"
               autocomplete="new-password"
               minlength="15"
-              maxlength="128"
               aria-describedby="pista-contrasena"
               required
             >
             <p id="pista-contrasena" class="pista">
-              Mínimo 15 caracteres. Puedes usar una frase fácil de recordar; no se exigen
-              mayúsculas, números ni símbolos.
+              Entre 15 y 128 caracteres. Puedes usar una frase fácil de recordar, con espacios;
+              no se exigen mayúsculas, números ni símbolos. No se aceptan contraseñas muy comunes.
             </p>
           </div>
           <button type="submit">Crear cuenta</button>

@@ -36,9 +36,10 @@ ReserveApp/
 │   ├── controllers/        # Fachada y reglas de negocio
 │   ├── dao/                # Acceso a datos (en memoria por ahora)
 │   ├── models/             # Entidades del dominio
-│   ├── seguridad/          # Hash de contraseñas y tokens JWT
+│   ├── seguridad/          # Hash de contraseñas, tokens JWT y lista de contraseñas comunes
 │   ├── views/              # Interfaz web
 │   └── server.js           # Servidor Express y rutas de la API
+├── test/                   # Pruebas automatizadas
 ├── package.json            # Dependencias y comandos del proyecto
 └── README.md               # Descripción e información general del proyecto
 ```
@@ -67,13 +68,24 @@ npm start
 
 Después abre <http://localhost:3000>. Las habitaciones y reservas son datos de ejemplo en memoria: no representan tarifas reales y se reinician con cada ejecución.
 
+## Pruebas
+
+```bash
+npm test
+```
+
+Usa el ejecutor de pruebas incluido en Node, por lo que no requiere dependencias adicionales ni `JWT_SECRET`.
+
 ## Registro e Inicio de Sesión
 
 Entra a <http://localhost:3000/cuenta.html> o usa el enlace **Mi cuenta** de la página principal.
 
 * Las cuentas se guardan en memoria y se pierden al reiniciar el servidor.
 * El registro público siempre crea cuentas con rol `HUESPED`. Todavía no hay una forma de crear cuentas de personal.
-* La contraseña debe tener entre 15 y 128 caracteres, sin reglas de composición.
+* La contraseña debe tener entre 15 y 128 caracteres Unicode, sin reglas de composición y sin truncarse. El criterio completo está en `DOCS/01_requisitos.md`.
+* El registro rechaza las contraseñas que coinciden por completo con `src/seguridad/contrasenas-comunes.txt`, sin distinguir mayúsculas y unificando variantes Unicode (NFKC). La comparación es local: las contraseñas no se envían a servicios externos ni se registran en logs.
+* **Alcance de la lista:** es una selección manual de valores previsibles; no cubre todas las contraseñas filtradas y no se comparó con ninguna base de datos de filtraciones.
+* **Mantenimiento de la lista:** agrega una contraseña por línea en ese archivo y ejecuta `npm test`, que falla si una entrada está repetida o no tiene entre 15 y 128 caracteres.
 * Las contraseñas se guardan como hash con Argon2id, o con scrypt si la versión de Node no incluye `crypto.argon2`.
 * La sesión es un JWT que dura 1 hora y viaja en una cookie `HttpOnly`.
 * La confirmación del registro se muestra en la interfaz; no se envían correos.
