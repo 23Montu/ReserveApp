@@ -1,0 +1,167 @@
+:root {
+  --fondo: #f5f4f0;
+  --superficie: #ffffff;
+  --texto: #1f2a2e;
+  --texto-suave: #55646a;
+  --borde: #d5d8d6;
+  --primario: #0f4c5c;
+  --primario-oscuro: #0a3742;
+  --error: #a32121;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+.encabezado {
+  padding: 2rem 1rem 4.5rem;
+  background: var(--primario);
+  color: #ffffff;
+  text-align: center;
+}
+
+.marca {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.encabezado h1 {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+}
+
+.contenido {
+  max-width: 64rem;
+  margin: -3rem auto 3rem;
+  padding: 0 1rem;
+}
+
+.buscador {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 1rem;
+  align-items: end;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--superficie);
+  box-shadow: 0 8px 24px rgb(15 76 92 / 16%);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  min-height: 2.75rem;
+  border-radius: 0.5rem;
+  font: inherit;
+}
+
+input,
+select {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--borde);
+  background: var(--superficie);
+  color: inherit;
+}
+
+button {
+  border: 0;
+  background: var(--primario);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--primario-oscuro);
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 3px solid #e09f3e;
+  outline-offset: 2px;
+}
+
+.mensaje {
+  margin: 1.5rem 0 1rem;
+  color: var(--texto-suave);
+}
+
+.mensaje-error {
+  color: var(--error);
+  font-weight: 600;
+}
+
+.resultados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.habitacion {
+  padding: 1.25rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.75rem;
+  background: var(--superficie);
+}
+
+.habitacion p,
+.habitacion h2 {
+  margin: 0;
+}
+
+.habitacion-tipo {
+  color: var(--primario);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.habitacion-nombre {
+  font-size: 1.2rem;
+}
+
+.habitacion-capacidad {
+  margin-top: 0.5rem !important;
+  color: var(--texto-suave);
+}
+
+.habitacion-precio {
+  margin-top: 0.75rem !important;
+}
+
+.habitacion-precio strong {
+  font-size: 1.25rem;
+}
