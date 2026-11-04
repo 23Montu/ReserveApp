@@ -28,6 +28,29 @@ Por esta razón, se propone desarrollar ReserveApp, un sistema que centralice la
 ```text
 ReserveApp/
 ├── DOCS/
-│   └── 01_requisitos.md    # Documento de requisitos, actores y matriz de problemas
-    └── 02_Priorizaciòn.md    # Documento de priorizaciòn.
+│   ├── 01_requisitos.md    # Documento de requisitos, actores y matriz de problemas
+│   ├── 02_priorización.md  # Documento de priorización
+│   ├── 03_estimacion_y_costos.md          # Estimación, costos y velocidad del equipo
+│   └── 04_plan_de_proyecto_y_modelos.md   # Modelo de proceso y plan de Sprints
+├── src/
+│   ├── controllers/        # Fachada y reglas de negocio
+│   ├── dao/                # Acceso a datos (en memoria por ahora)
+│   ├── models/             # Entidades del dominio
+│   ├── views/              # Interfaz web
+│   └── server.js           # Servidor Express y rutas de la API
+├── package.json            # Dependencias y comandos del proyecto
 └── README.md               # Descripción e información general del proyecto
+```
+
+---
+
+## Ejecución Local
+
+Requiere Node.js 18 o superior.
+
+```bash
+npm install
+npm start
+```
+
+Después abre <http://localhost:3000>. Las habitaciones y reservas son datos de ejemplo en memoria: no representan tarifas reales y se reinician con cada ejecución.

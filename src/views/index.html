@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Buscar habitaciones | ReserveApp</title>
+    <link rel="stylesheet" href="estilos.css">
+  </head>
+  <body>
+    <header class="encabezado">
+      <p class="marca">ReserveApp</p>
+      <h1>Busca tu habitación</h1>
+    </header>
+
+    <main class="contenido">
+      <form id="formulario-busqueda" class="buscador">
+        <div class="campo">
+          <label for="fecha-entrada">Fecha de check-in</label>
+          <input id="fecha-entrada" name="fechaEntrada" type="date" required>
+        </div>
+        <div class="campo">
+          <label for="fecha-salida">Fecha de check-out</label>
+          <input id="fecha-salida" name="fechaSalida" type="date" required>
+        </div>
+        <div class="campo">
+          <label for="huespedes">Número de huéspedes</label>
+          <input id="huespedes" name="huespedes" type="number" min="1" step="1" value="1" required>
+        </div>
+        <div class="campo">
+          <label for="tipo">Tipo de habitación</label>
+          <select id="tipo" name="tipo">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <button id="boton-buscar" type="submit">Buscar</button>
+      </form>
+
+      <p id="mensaje" class="mensaje" role="status">
+        Elige las fechas y el número de huéspedes para ver las habitaciones disponibles.
+      </p>
+      <ul id="resultados" class="resultados"></ul>
+    </main>
+
+    <template id="plantilla-habitacion">
+      <li class="habitacion">
+        <p class="habitacion-tipo"></p>
+        <h2 class="habitacion-nombre"></h2>
+        <p class="habitacion-capacidad"></p>
+        <p class="habitacion-precio"><strong></strong> por noche</p>
+      </li>
+    </template>
+
+    <script src="busqueda.js"></script>
+  </body>
+</html>
