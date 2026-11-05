@@ -5,6 +5,7 @@ const net = require('node:net');
 const path = require('node:path');
 const { after, before, describe, test } = require('node:test');
 const { setTimeout: esperar } = require('node:timers/promises');
+const { crearToken } = require('../src/seguridad/jwt');
 
 /**
  * Prueba HU01 (Issue #1) contra el servidor real, porque la cookie y el cuerpo de las
@@ -16,6 +17,8 @@ const { setTimeout: esperar } = require('node:timers/promises');
  */
 const RAIZ = path.join(__dirname, '..');
 const SECRETO_FICTICIO = 'secreto-ficticio-solo-para-pruebas-automatizadas';
+const OTRO_SECRETO_FICTICIO = 'otro-secreto-ficticio-solo-para-pruebas-automatizadas';
+const UNA_HORA = 60 * 60;
 const COOKIE_SESION = 'reserveapp_sesion';
 const CONTRASENA = 'frase ficticia para estas pruebas';
 const OTRA_CONTRASENA = 'otra frase ficticia para estas pruebas';
@@ -158,6 +161,24 @@ async function crearSesion() {
   const login = await iniciarSesion({ correo, contrasena: CONTRASENA });
   assert.equal(login.estado, 200);
   return { correo, login, cookie: leerCookie(login) };
+}
+
+/**
+ * Codifica un objeto como JSON en Base64URL, como las partes de un token.
+ * @param {object} datos Objeto para codificar.
+ * @returns {string} Texto codificado.
+ */
+function aBase64Url(datos) {
+  return Buffer.from(JSON.stringify(datos)).toString('base64url');
+}
+
+/**
+ * Lee la carga de un token sin verificarlo.
+ * @param {string} token Token JWT.
+ * @returns {{sub: string}} Carga del token.
+ */
+function leerCarga(token) {
+  return JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString());
 }
 
 describe('registro e inicio de sesión con el servidor real', () => {
@@ -317,6 +338,55 @@ describe('registro e inicio de sesión con el servidor real', () => {
       const resultado = await registrar({ correo: correoNuevo(), contrasena: CONTRASENA });
       assert.equal(resultado.estado, 201);
       assert.equal(leerCookie(resultado), null);
+    });
+  });
+
+  // Cada token conserva datos de una cuenta real: si se rechaza, es por el motivo que se prueba.
+  describe('token de sesión no válido', () => {
+    test('un token bien firmado y vigente identifica la cuenta', async () => {
+      const { correo, cookie } = await crearSesion();
+      const { sub } = leerCarga(cookie.valor);
+
+      const sesion = await consultarSesion(crearToken({ sub }, SECRETO_FICTICIO, UNA_HORA));
+      assert.deepEqual(sesion.datos, { usuario: { correo, rol: 'HUESPED' } });
+    });
+
+    const falsificaciones = {
+      'con un carácter de la firma cambiado': ({ encabezado, carga, firma }) => (
+        `${encabezado}.${carga}.${firma[0] === 'A' ? 'B' : 'A'}${firma.slice(1)}`
+      ),
+      'firmado con otro secreto': ({ sub }) => crearToken({ sub }, OTRO_SECRETO_FICTICIO, UNA_HORA),
+      'de otra cuenta sin volver a firmarlo': ({ encabezado, token, firma, subAjeno }) => (
+        `${encabezado}.${aBase64Url({ ...leerCarga(token), sub: subAjeno })}.${firma}`
+      ),
+      'con alg none y sin firma': ({ carga }) => `${aBase64Url({ alg: 'none', typ: 'JWT' })}.${carga}.`,
+      vencido: ({ sub }) => crearToken({ sub }, SECRETO_FICTICIO, -1),
+    };
+
+    for (const [nombre, falsificar] of Object.entries(falsificaciones)) {
+      test(`no da sesión con un token ${nombre}`, async () => {
+        const { cookie } = await crearSesion();
+        const { cookie: cookieAjena } = await crearSesion();
+        const token = cookie.valor;
+        const [encabezado, carga, firma] = token.split('.');
+
+        const sesion = await consultarSesion(falsificar({
+          token,
+          encabezado,
+          carga,
+          firma,
+          sub: leerCarga(token).sub,
+          subAjeno: leerCarga(cookieAjena.valor).sub,
+        }));
+
+        assert.equal(sesion.estado, 200);
+        assert.deepEqual(sesion.datos, { usuario: null });
+      });
+    }
+
+    test('no da sesión con un token bien firmado de una cuenta inexistente', async () => {
+      const sesion = await consultarSesion(crearToken({ sub: 'cuenta-inexistente' }, SECRETO_FICTICIO, UNA_HORA));
+      assert.deepEqual(sesion.datos, { usuario: null });
     });
   });
 
