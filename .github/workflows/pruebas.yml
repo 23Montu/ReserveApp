@@ -1,0 +1,42 @@
+# Ejecuta la suite de pruebas en cada Pull Request hacia main.
+# Node 22 usa el respaldo scrypt para las contraseñas; Node 24 incluye crypto.argon2
+# (desde 24.7), así que la matriz prueba los dos caminos de src/seguridad/contrasenas.js.
+name: Pruebas
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pruebas-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruebas:
+    name: npm test (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22.x', '24.x']
+    steps:
+      # Acciones fijadas por SHA de commit; el comentario indica la versión publicada.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: node --version
+
+      # npm ci instala exactamente lo del lockfile y falla si no coincide con package.json.
+      - run: npm ci
+
+      - run: npm test
