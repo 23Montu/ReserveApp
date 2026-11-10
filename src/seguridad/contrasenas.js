@@ -35,12 +35,15 @@ const DERIVADORES = {
 };
 
 /**
- * Unifica las distintas representaciones Unicode de una misma contraseña, para que
- * funcione igual sin importar el teclado o sistema operativo con que se escriba.
+ * Unifica las distintas representaciones Unicode de una misma contraseña con NFKC, para
+ * que funcione igual sin importar el teclado o sistema operativo con que se escriba.
+ * Es el único criterio de normalización para guardar, verificar y medir la longitud de
+ * una contraseña: así la longitud validada es la del texto que realmente se protege.
+ * No cambia mayúsculas ni minúsculas.
  * @param {string} contrasena Contraseña recibida.
  * @returns {string} Contraseña normalizada.
  */
-function normalizar(contrasena) {
+function normalizarContrasena(contrasena) {
   return contrasena.normalize('NFKC');
 }
 
@@ -61,7 +64,7 @@ function aBase64(bytes) {
  */
 async function hashearContrasena(contrasena) {
   const sal = crypto.randomBytes(LONGITUD_SAL);
-  const texto = normalizar(contrasena);
+  const texto = normalizarContrasena(contrasena);
 
   if (argon2) {
     const hash = await DERIVADORES.argon2id(ARGON2ID, texto, sal, LONGITUD_HASH);
@@ -92,11 +95,11 @@ async function verificarContrasena(contrasena, hashGuardado) {
 
   const calculado = await DERIVADORES[algoritmo](
     parametros,
-    normalizar(contrasena),
+    normalizarContrasena(contrasena),
     sal,
     esperado.length,
   );
   return crypto.timingSafeEqual(calculado, esperado);
 }
 
-module.exports = { hashearContrasena, verificarContrasena };
+module.exports = { hashearContrasena, normalizarContrasena, verificarContrasena };

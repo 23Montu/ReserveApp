@@ -21,7 +21,8 @@
 
 Detalla el criterio de aceptación "contraseña segura":
 
-* La contraseña debe tener entre 15 y 128 caracteres Unicode, inclusive; cada punto de código cuenta una vez.
+* La contraseña debe tener entre 15 y 128 caracteres Unicode, inclusive; cada punto de código cuenta una vez. La longitud se mide **después** de normalizar la contraseña con NFKC.
+* Antes de guardar la contraseña y antes de verificarla al iniciar sesión, se normaliza con NFKC. Las formas Unicode que NFKC unifica se consideran la misma contraseña: por ejemplo, «é» escrita como un solo carácter o como «e» más el acento combinante, o las letras de ancho completo y sus equivalentes ASCII. Algunos caracteres se expanden al normalizarse y cuentan con su longitud normalizada. Las mayúsculas y minúsculas se siguen distinguiendo. *(Opción A, aprobada por el Product Owner el 2026-11-10.)*
 * Acepta espacios y distintos tipos de caracteres. No se exigen combinaciones de mayúsculas, minúsculas, números o símbolos.
 * La contraseña no se trunca.
 * Se rechaza la contraseña completa si coincide con una lista mantenible de contraseñas comunes, esperadas o comprometidas (`src/seguridad/contrasenas-comunes.txt`). La lista incluye valores previsibles muy comunes, como algunas secuencias o repeticiones; no se prohíbe de forma general cualquier secuencia o repetición.
@@ -29,7 +30,7 @@ Detalla el criterio de aceptación "contraseña segura":
 
 ### Comportamiento implementado, pendiente de aprobación
 
-* **Comparación con la lista:** el comportamiento implementado compara sin distinguir mayúsculas y con normalización Unicode NFKC, para que variantes como `PASSWORDPASSWORD` o los mismos dígitos en ancho completo no eludan la lista. El criterio anterior no lo exige y **todavía no está aprobado**. Ignorar las mayúsculas solo afecta a esta comparación: al guardar la contraseña e iniciar sesión, las mayúsculas sí se distinguen.
+* **Comparación con la lista:** el comportamiento implementado compara sin distinguir mayúsculas y con normalización Unicode NFKC, para que variantes como `PASSWORDPASSWORD` o los mismos dígitos en ancho completo no eludan la lista. El criterio anterior no lo exige y **todavía no está aprobado**. Esta decisión es independiente de la normalización NFKC al guardar y verificar la contraseña, que sí está aprobada (ver «Política de contraseñas»). Ignorar las mayúsculas solo afecta a esta comparación: al guardar la contraseña e iniciar sesión, las mayúsculas sí se distinguen.
 
 ### Discrepancias pendientes de decisión
 

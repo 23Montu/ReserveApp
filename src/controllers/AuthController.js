@@ -1,7 +1,11 @@
 const { randomBytes, randomUUID } = require('node:crypto');
 const UsuarioDAO = require('../dao/UsuarioDAO');
 const { Usuario, ROLES } = require('../models/Usuario');
-const { hashearContrasena, verificarContrasena } = require('../seguridad/contrasenas');
+const {
+  hashearContrasena,
+  normalizarContrasena,
+  verificarContrasena,
+} = require('../seguridad/contrasenas');
 const { esContrasenaComun } = require('../seguridad/contrasenasComunes');
 const { crearToken, verificarToken } = require('../seguridad/jwt');
 
@@ -11,8 +15,9 @@ const FORMATO_CORREO = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
 
 /**
  * Política de contraseñas acordada para HU01 (ver DOCS/01_requisitos.md): entre 15 y 128
- * puntos de código, sin reglas de composición y fuera de la lista de contraseñas comunes.
- * Lo que excede el máximo se rechaza en lugar de truncarse.
+ * puntos de código, contados después de normalizar con NFKC, sin reglas de composición y
+ * fuera de la lista de contraseñas comunes. Lo que excede el máximo se rechaza en lugar
+ * de truncarse.
  */
 const LONGITUD_MINIMA_CONTRASENA = 15;
 const LONGITUD_MAXIMA_CONTRASENA = 128;
@@ -84,8 +89,9 @@ class AuthController {
       return { estado: 400, error: 'Ingresa una contraseña.' };
     }
 
-    // Se cuentan caracteres Unicode completos, no unidades UTF-16.
-    const longitud = [...contrasena].length;
+    // Se mide la contraseña normalizada, que es la que se guarda y se verifica, y se
+    // cuentan puntos de código, no unidades UTF-16.
+    const longitud = [...normalizarContrasena(contrasena)].length;
     if (longitud < LONGITUD_MINIMA_CONTRASENA) {
       return {
         estado: 400,
