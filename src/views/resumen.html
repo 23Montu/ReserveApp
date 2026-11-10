@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resumen de reserva | ReserveApp</title>
+    <link rel="stylesheet" href="estilos.css">
+  </head>
+  <body>
+    <header class="encabezado">
+      <p class="marca">ReserveApp</p>
+      <h1>Resumen de tu reserva</h1>
+    </header>
+
+    <main class="contenido">
+      <section class="resumen" aria-labelledby="titulo-estadia">
+        <p id="mensaje-resumen" class="mensaje" role="status">Cargando el resumen…</p>
+
+        <div id="detalle-resumen" hidden>
+          <h2 id="titulo-estadia">Tu estadía</h2>
+          <dl class="datos-estadia">
+            <dt>Habitación</dt>
+            <dd id="dato-habitacion"></dd>
+            <dt>Check-in</dt>
+            <dd id="dato-entrada"></dd>
+            <dt>Check-out</dt>
+            <dd id="dato-salida"></dd>
+            <dt>Huéspedes</dt>
+            <dd id="dato-huespedes"></dd>
+          </dl>
+
+          <h2>Desglose del precio</h2>
+          <table class="desglose">
+            <tbody>
+              <tr>
+                <th scope="row" id="etiqueta-tarifa">Tarifa por noche</th>
+                <td id="dato-tarifa"></td>
+              </tr>
+              <tr>
+                <th scope="row">Noches</th>
+                <td id="dato-noches"></td>
+              </tr>
+              <tr>
+                <th scope="row" id="etiqueta-sin-impuesto">Valor sin impuestos</th>
+                <td id="dato-sin-impuesto"></td>
+              </tr>
+              <tr>
+                <th scope="row" id="etiqueta-impuesto">Impuestos incluidos</th>
+                <td id="dato-impuesto"></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">Total a pagar</th>
+                <td id="dato-total"></td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <div id="aviso-pendientes" class="aviso-pendiente" hidden>
+            <p>Este resumen todavía no está completo:</p>
+            <ul id="lista-pendientes"></ul>
+          </div>
+        </div>
+      </section>
+
+      <form id="formulario-pago" class="panel-pago" hidden>
+        <fieldset>
+          <legend>Método de pago</legend>
+          <div id="opciones-pago" class="opciones-pago"></div>
+          <p id="sin-metodos" class="pista" hidden>Todavía no hay métodos de pago disponibles.</p>
+        </fieldset>
+        <button id="boton-continuar" type="submit" disabled>Continuar al pago</button>
+        <p id="mensaje-pago" class="mensaje" role="status"></p>
+      </form>
+
+      <p><a class="enlace-volver" href="index.html">Volver a la búsqueda</a></p>
+    </main>
+
+    <script src="resumen.js"></script>
+  </body>
+</html>
