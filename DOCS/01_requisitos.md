@@ -32,9 +32,12 @@ Detalla el criterio de aceptación "contraseña segura":
 
 * **Comparación con la lista:** el comportamiento implementado compara sin distinguir mayúsculas y con normalización Unicode NFKC, para que variantes como `PASSWORDPASSWORD` o los mismos dígitos en ancho completo no eludan la lista. El criterio anterior no lo exige y **todavía no está aprobado**. Esta decisión es independiente de la normalización NFKC al guardar y verificar la contraseña, que sí está aprobada (ver «Política de contraseñas»). Ignorar las mayúsculas solo afecta a esta comparación: al guardar la contraseña e iniciar sesión, las mayúsculas sí se distinguen.
 
+### Decisiones resueltas
+
+* **Roles (resuelto en el Issue #5, 2026-11-10):** el control de acceso por roles se implementará en una historia Must Have independiente. HU01 conserva sus tres criterios; el registro asigna `HUESPED` y ninguna ruta exige un rol. `DOCS/02` y `DOCS/03` se actualizarán cuando se cree y estime esa historia.
+
 ### Discrepancias pendientes de decisión
 
-* **Roles:** `DOCS/02_priorización.md` y `DOCS/03_estimacion_y_costos.md` atribuyen a HU01 el control de acceso por rol, pero los criterios del Issue #1 no lo incluyen. El código asigna el rol `HUESPED` y lo muestra; ninguna ruta lo exige y no se pueden crear cuentas de personal.
 * **Mensaje de confirmación:** el Issue dice "se envía". La confirmación se muestra en pantalla y no se envían correos.
 * **Historial de reservas:** la historia lo menciona, pero no es un criterio de aceptación; lo cubre HU09 (Issue #9).
 
