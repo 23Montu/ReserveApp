@@ -1,12 +1,18 @@
+
 const path = require('path');
 const express = require('express');
 const HabitacionController = require('./controllers/HabitacionController');
-const { AuthController, DURACION_SESION_SEGUNDOS } = require('./controllers/AuthController');
+const {
+  AuthController,
+  DURACION_SESION_SEGUNDOS,
+} = require('./controllers/AuthController');
+const ResumenReservaController = require('./controllers/ResumenReservaController');
 
 const PUERTO = process.env.PORT || 3000;
 const SECRETO_JWT = process.env.JWT_SECRET;
 const LONGITUD_MINIMA_SECRETO = 32;
 const COOKIE_SESION = 'reserveapp_sesion';
+
 const OPCIONES_COOKIE = {
   httpOnly: true,
   sameSite: 'strict',
@@ -25,6 +31,7 @@ if (!SECRETO_JWT || Buffer.byteLength(SECRETO_JWT) < LONGITUD_MINIMA_SECRETO) {
 const app = express();
 const habitacionController = new HabitacionController();
 const authController = new AuthController(SECRETO_JWT);
+const resumenReservaController = new ResumenReservaController(habitacionController);
 const leerJson = express.json({ limit: '10kb' });
 
 /**
@@ -36,10 +43,12 @@ const leerJson = express.json({ limit: '10kb' });
 function leerCookie(req, nombre) {
   for (const cookie of (req.headers.cookie ?? '').split(';')) {
     const [clave, valor] = cookie.trim().split('=');
+
     if (clave === nombre) {
       return valor;
     }
   }
+
   return undefined;
 }
 
@@ -54,41 +63,60 @@ app.get('/api/habitaciones/disponibles', (req, res) => {
   res.status(resultado.error ? 400 : 200).json(resultado);
 });
 
+// Registro de usuarios.
 app.post('/api/auth/registro', leerJson, async (req, res) => {
   const { estado, ...cuerpo } = await authController.registrar(req.body ?? {});
   res.status(estado).json(cuerpo);
 });
 
+// Inicio de sesión.
 app.post('/api/auth/login', leerJson, async (req, res) => {
   const { estado, token, ...cuerpo } = await authController.iniciarSesion(req.body ?? {});
+
   if (token) {
-    // La cookie HttpOnly evita que el JavaScript de la página pueda leer el token.
+    // La cookie HttpOnly evita que JavaScript pueda leer el token.
     res.cookie(COOKIE_SESION, token, {
       ...OPCIONES_COOKIE,
       maxAge: DURACION_SESION_SEGUNDOS * 1000,
     });
   }
+
   res.status(estado).json(cuerpo);
 });
 
+// Cierre de sesión.
 app.post('/api/auth/logout', (req, res) => {
   res.clearCookie(COOKIE_SESION, OPCIONES_COOKIE);
   res.status(204).end();
 });
 
+// Consulta de la sesión actual.
 app.get('/api/auth/sesion', (req, res) => {
   res.set('Cache-Control', 'no-store');
-  res.json({ usuario: authController.obtenerSesion(leerCookie(req, COOKIE_SESION)) });
+  res.json({
+    usuario: authController.obtenerSesion(leerCookie(req, COOKIE_SESION)),
+  });
 });
 
-// Responde en JSON para que un cuerpo inválido no devuelva el HTML de error de Express.
+// Resumen de reserva: solo consulta, no guarda información.
+app.get('/api/reservas/resumen', (req, res) => {
+  const { estado, ...resultado } = resumenReservaController.generarResumen(req.query);
+  res.status(estado).json(resultado);
+});
+
+// Manejo de errores en formato JSON.
 app.use((error, req, res, next) => {
   if (error.status >= 400 && error.status < 500) {
-    res.status(error.status).json({ error: 'La solicitud no es válida.' });
+    res.status(error.status).json({
+      error: 'La solicitud no es válida.',
+    });
     return;
   }
+
   console.error(error);
-  res.status(500).json({ error: 'Ocurrió un error interno. Intenta de nuevo.' });
+  res.status(500).json({
+    error: 'Ocurrió un error interno. Intenta de nuevo.',
+  });
 });
 
 app.listen(PUERTO, '127.0.0.1', () => {
