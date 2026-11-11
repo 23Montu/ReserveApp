@@ -1,0 +1,131 @@
+# Contraseñas comunes o previsibles que el registro rechaza (HU01, Issue #1).
+#
+# Alcance: selección manual de valores previsibles de al menos 15 caracteres: secuencias,
+# repeticiones, patrones de teclado, frases conocidas y palabras propias del proyecto.
+# NO cubre todas las contraseñas filtradas: no se comparó con ninguna base de datos de
+# filtraciones y el sistema no consulta servicios externos.
+#
+# Mantenimiento: una contraseña por línea, sin espacios al inicio ni al final; las líneas
+# que empiezan con # son comentarios. Se compara la contraseña completa, sin distinguir
+# mayúsculas y unificando variantes Unicode (NFKC), así que basta una versión de cada valor.
+# `npm test` falla si una entrada está repetida o no tiene entre 15 y 128 caracteres,
+# porque esa entrada nunca podría coincidir con una contraseña aceptada por longitud.
+
+# Secuencias numéricas
+123456789012345
+1234567890123456
+12345678901234567890
+012345678901234
+0123456789012345
+098765432109876
+987654321098765
+9876543210987654
+12345678987654321
+123123123123123
+123412341234123
+123451234512345
+121212121212121
+1212121212121212
+112233445566778
+11223344556677889900
+
+# Repeticiones
+000000000000000
+0000000000000000
+111111111111111
+1111111111111111
+11111111111111111111
+222222222222222
+999999999999999
+aaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+xxxxxxxxxxxxxxx
+
+# Alfabeto y patrones de teclado
+abcdefghijklmno
+abcdefghijklmnop
+abcdefghijklmnopqrst
+abcdefghijklmnopqrstuvwxyz
+abc123abc123abc
+abc123abc123abc123
+abcabcabcabcabc
+abcd1234abcd1234
+qwertyuiopasdfg
+qwertyuiopasdfgh
+qwertyuiopasdfghjkl
+qwertyuiopasdfghjklzxcvbnm
+qwertyqwertyqwerty
+qwerty123456789
+qwerty1234567890
+qweasdzxcqweasdzxc
+asdfasdfasdfasdf
+1q2w3e4r5t6y7u8
+1q2w3e4r5t6y7u8i
+1q2w3e4r5t6y7u8i9o0p
+1qaz2wsx3edc4rfv
+1qaz2wsx3edc4rfv5tgb
+1qazxsw23edcvfr4
+qazwsxedcrfvtgb
+qazwsxedcrfvtgbyhn
+zaq12wsxcde34rfv
+
+# Palabras y frases conocidas
+passwordpassword
+passwordpassword1
+password1234567
+password12345678
+password123456789
+password1234567890
+password password
+p@ssw0rdp@ssw0rd
+iloveyouiloveyou
+iloveyou1234567
+letmeinletmeinletmein
+welcomewelcomewelcome
+welcome12345678
+adminadminadmin
+admin1234567890
+administrator123
+administrator1234
+changemechangeme
+defaultpassword
+thisismypassword
+mypasswordmypassword
+correcthorsebatterystaple
+correct horse battery staple
+thequickbrownfoxjumpsoverthelazydog
+the quick brown fox jumps over the lazy dog
+
+# En español
+contrasena12345
+contraseña12345
+contrasena123456
+contraseña123456
+contrasenacontrasena
+contraseñacontraseña
+micontrasena123
+micontraseña123
+micontrasenasegura
+contrasena segura
+contraseña segura
+mi contraseña segura
+teamoteamoteamo
+teamo1234567890
+colombiacolombia
+colombia1234567
+holaholaholahola
+hola12345678910
+
+# Propias de este sistema
+reserveapp12345
+reserveapp123456
+reserveappreserveapp
+hotelhotelhotel
+hotel1234567890
+hotelreserveapp
+reservareservareserva
+reservas1234567
+frase facil de recordar
+frase fácil de recordar
+frasefacilderecordar

@@ -1,3 +1,4 @@
+
 :root {
   --fondo: #f5f4f0;
   --superficie: #ffffff;
@@ -7,10 +8,15 @@
   --primario: #0f4c5c;
   --primario-oscuro: #0a3742;
   --error: #a32121;
+  --exito: #1d6b3a;
 }
 
 * {
   box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 body {
@@ -166,6 +172,60 @@ button:focus-visible {
   font-size: 1.25rem;
 }
 
+/* Registro e inicio de sesión */
+
+.enlace-encabezado {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #ffffff;
+}
+
+.enlace-encabezado:focus-visible {
+  outline: 3px solid #e09f3e;
+  outline-offset: 2px;
+}
+
+.paneles-cuenta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.panel-cuenta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--superficie);
+  box-shadow: 0 8px 24px rgb(15 76 92 / 16%);
+}
+
+.panel-cuenta h2,
+.panel-cuenta p {
+  margin: 0;
+}
+
+.panel-cuenta h2 {
+  font-size: 1.2rem;
+}
+
+.pista {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.mensaje-cuenta:empty {
+  display: none;
+}
+
+.mensaje-exito {
+  color: var(--exito);
+  font-weight: 600;
+}
+
 /* Resumen de reserva (HU03a) */
 
 .habitacion-accion,
@@ -278,11 +338,6 @@ button:focus-visible {
 .opcion-pago input {
   width: auto;
   min-height: 0;
-}
-
-.pista {
-  margin: 0;
-  color: var(--texto-suave);
 }
 
 .panel-pago button {
