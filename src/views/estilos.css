@@ -165,3 +165,135 @@ button:focus-visible {
 .habitacion-precio strong {
   font-size: 1.25rem;
 }
+
+/* Resumen de reserva (HU03a) */
+
+.habitacion-accion,
+.enlace-volver {
+  color: var(--primario);
+  font-weight: 600;
+}
+
+.habitacion-accion {
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.resumen,
+.panel-pago {
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--superficie);
+  box-shadow: 0 8px 24px rgb(15 76 92 / 16%);
+}
+
+.resumen .mensaje {
+  margin: 0 0 1rem;
+}
+
+.resumen h2,
+.panel-pago legend {
+  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.datos-estadia {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.datos-estadia dt {
+  font-weight: 600;
+}
+
+.datos-estadia dd {
+  margin: 0;
+}
+
+.desglose {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.desglose th,
+.desglose td {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--borde);
+  font-weight: 400;
+  text-align: left;
+}
+
+.desglose td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.desglose tfoot th,
+.desglose tfoot td {
+  border-bottom: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.aviso-pendiente {
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ecd3a8;
+  border-radius: 0.5rem;
+  background: #fdf6ea;
+}
+
+.aviso-pendiente p,
+.aviso-pendiente ul {
+  margin: 0;
+}
+
+.aviso-pendiente ul {
+  margin-top: 0.35rem;
+  padding-left: 1.25rem;
+}
+
+.panel-pago fieldset {
+  margin: 0 0 1rem;
+  padding: 0;
+  border: 0;
+}
+
+.opciones-pago {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.opcion-pago {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.opcion-pago input {
+  width: auto;
+  min-height: 0;
+}
+
+.pista {
+  margin: 0;
+  color: var(--texto-suave);
+}
+
+.panel-pago button {
+  width: auto;
+  padding: 0 1.5rem;
+}
+
+.panel-pago button:disabled {
+  cursor: not-allowed;
+}
+
+.panel-pago .mensaje {
+  margin: 1rem 0 0;
+}

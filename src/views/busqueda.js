@@ -27,14 +27,24 @@ function mostrarMensaje(texto, esError = false) {
 }
 
 /**
+ * Estadía con la que se hizo la búsqueda; el resumen de reserva (HU03a) la reutiliza.
+ * @typedef {Object} EstadiaBuscada
+ * @property {string} fechaEntrada Fecha de check-in en formato AAAA-MM-DD.
+ * @property {string} fechaSalida Fecha de check-out en formato AAAA-MM-DD.
+ * @property {string} huespedes Número de huéspedes.
+ */
+
+/**
  * Construye la tarjeta de una habitación a partir de la plantilla HTML.
- * @param {{nombre: string, tipo: string, capacidad: number, precioPorNoche: number}} habitacion
+ * @param {{id: number, nombre: string, tipo: string, capacidad: number, precioPorNoche: number}} habitacion
  *   Habitación recibida de la API.
+ * @param {EstadiaBuscada} estadia Estadía buscada, para el enlace al resumen de reserva.
  * @returns {DocumentFragment} Tarjeta lista para insertar en la lista.
  */
-function crearTarjeta(habitacion) {
+function crearTarjeta(habitacion, estadia) {
   const tarjeta = plantilla.content.cloneNode(true);
   const unidad = habitacion.capacidad === 1 ? 'huésped' : 'huéspedes';
+  const consultaResumen = new URLSearchParams({ habitacionId: habitacion.id, ...estadia });
 
   tarjeta.querySelector('.habitacion-tipo').textContent = habitacion.tipo;
   tarjeta.querySelector('.habitacion-nombre').textContent = habitacion.nombre;
@@ -42,6 +52,7 @@ function crearTarjeta(habitacion) {
     `Capacidad máxima: ${habitacion.capacidad} ${unidad}`;
   tarjeta.querySelector('.habitacion-precio strong').textContent =
     formatoCOP.format(habitacion.precioPorNoche);
+  tarjeta.querySelector('.habitacion-accion').href = `resumen.html?${consultaResumen}`;
 
   return tarjeta;
 }
@@ -49,9 +60,10 @@ function crearTarjeta(habitacion) {
 /**
  * Muestra las habitaciones encontradas y un resumen de cuántas son.
  * @param {Array<object>} habitaciones Habitaciones disponibles.
+ * @param {EstadiaBuscada} estadia Estadía con la que se buscaron.
  */
-function mostrarHabitaciones(habitaciones) {
-  resultados.replaceChildren(...habitaciones.map(crearTarjeta));
+function mostrarHabitaciones(habitaciones, estadia) {
+  resultados.replaceChildren(...habitaciones.map((habitacion) => crearTarjeta(habitacion, estadia)));
 
   if (habitaciones.length === 0) {
     mostrarMensaje('No hay habitaciones disponibles con esos criterios.');
@@ -72,7 +84,8 @@ async function buscarHabitaciones(evento) {
   botonBuscar.disabled = true;
 
   try {
-    const parametros = new URLSearchParams(new FormData(formulario));
+    const datos = new FormData(formulario);
+    const parametros = new URLSearchParams(datos);
     const respuesta = await fetch(`/api/habitaciones/disponibles?${parametros}`);
     const resultado = await respuesta.json();
 
@@ -80,7 +93,12 @@ async function buscarHabitaciones(evento) {
       resultados.replaceChildren();
       mostrarMensaje(resultado.error, true);
     } else {
-      mostrarHabitaciones(resultado.habitaciones);
+      // Se usan los datos con que se buscó, aunque luego cambie el formulario.
+      mostrarHabitaciones(resultado.habitaciones, {
+        fechaEntrada: datos.get('fechaEntrada'),
+        fechaSalida: datos.get('fechaSalida'),
+        huespedes: datos.get('huespedes'),
+      });
     }
   } catch {
     resultados.replaceChildren();

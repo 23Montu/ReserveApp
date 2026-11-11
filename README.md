@@ -33,6 +33,7 @@ ReserveApp/
 │   ├── 03_estimacion_y_costos.md          # Estimación, costos y velocidad del equipo
 │   └── 04_plan_de_proyecto_y_modelos.md   # Modelo de proceso y plan de Sprints
 ├── src/
+│   ├── config/             # Valores configurables, como el impuesto y los métodos de pago
 │   ├── controllers/        # Fachada y reglas de negocio
 │   ├── dao/                # Acceso a datos (en memoria por ahora)
 │   ├── models/             # Entidades del dominio
@@ -54,3 +55,15 @@ npm start
 ```
 
 Después abre <http://localhost:3000>. Las habitaciones y reservas son datos de ejemplo en memoria: no representan tarifas reales y se reinician con cada ejecución.
+
+---
+
+## Resumen de Reserva (HU03a)
+
+En la búsqueda, cada habitación disponible tiene el enlace **Ver resumen de la reserva**. El resumen muestra la habitación, las fechas, los huéspedes y el desglose del precio: tarifa por noche, noches, valor sin IVA, IVA incluido y total a pagar. Antes de continuar al pago, el huésped debe elegir un método de pago.
+
+* El servidor arma el resumen con sus propios datos y vuelve a comprobar la disponibilidad con las reglas de la búsqueda: el navegador solo envía la habitación, las fechas y los huéspedes.
+* **Supuesto provisional:** el impuesto configurado es un IVA del 19 % (`src/config/resumenReserva.js`). Está pendiente de aprobación del Product Owner y no es una regla fiscal definitiva.
+* La tarifa por noche ya incluye el IVA, según indicó el equipo el 2026-11-10. El total a pagar es tarifa por noche × noches; el resumen calcula cuánto IVA contiene ese total, redondeado al peso, y el valor sin IVA es la diferencia.
+* Los métodos de pago son tarjeta de crédito, tarjeta débito y PSE. Ningún Issue ni documento los define: los eligió el equipo el 2026-11-10 y están en `src/config/resumenReserva.js`. El servidor solo acepta un método de esa lista.
+* El procesamiento del pago corresponde a HU03b (Issue #11) y todavía no está implementado: **Continuar al pago** solo confirma el método elegido.
